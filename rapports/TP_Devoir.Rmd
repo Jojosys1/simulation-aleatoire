@@ -1,0 +1,362 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+  word_document: default
+---
+
+#### **1.Donner le code pour acquérir les données et les visualiser.**
+
+```{r}
+#1- Code pour l'aquisition des données
+
+Obs=as.vector(LakeHuron)
+
+
+
+plot(Obs, type="l", main="Niveaux d'eau LakeHuron (1875-1972)")
+
+
+```
+
+**2. Tracer la fonction de répartition empirique.**
+
+```{r}
+#2 Tracons la fonction empirique
+Fonction_empirique <- ecdf(Obs) 
+ # Tracé 
+plot(Fonction_empirique, main = "Fonction de répartition empirique (ECDF)",xlab = "x", ylab = "F(x)", col = "blue", lwd = 2) 
+
+grid()
+
+
+
+```
+
+#### 3**. [Ajouter sur ce graphique la fonction de répartition de la loi normale dont l'espérance et l'écart-type sont la moyenne et l'écart-type de la variable Obs.]{.underline}**
+
+```{r}
+#3 Ajoute la fonction de répartition de la loi normale de moyenne et d'ecart type celle de Obs
+
+
+#Moyenne et ecart type
+
+mu=mean(Obs)
+
+ecart_type=sd(Obs)
+
+
+y=pnorm(Obs,mu,ecart_type)
+
+plot(Fonction_empirique, main = "Fonction de répartition empirique (ECDF)", 
+xlab = "x", ylab = "F(x)", col = "blue", lwd = 2) 
+
+lines(Obs,y,col ="yellow", lwd = 2) 
+
+#FONCTION DE REPARTITION
+
+
+
+grid()
+
+```
+
+**4. Tracer la fonction de quantile empirique.**
+
+```{r}
+#Fonction de quantile
+
+
+N=length(sort(Obs))
+
+ptx = seq(from=1/N, to=1,by=1/N) 
+
+Qn = quantile(Obs, ptx) 
+
+plot(ptx, Qn, type='l', xlab="p",ylab="Qn(p)", main="Fonction de quantile empirique", col=4, 
+lwd= 2)
+
+```
+
+#### ^[**5-Tracer le QQ-plot de la variable Obs.**]{.underline}^
+
+```{r}
+
+
+qqnorm(Obs, xlab="Q-theo", ylab="Q-emp", col=4, main="QQ-plot")
+
+
+```
+
+#### ^[**6-Tracer l'histogramme de la variable Obs ainsi que la densité de la loi normale dont l'espérance et l'écart-type sont la moyenne et l'écart-type de la variable Obs.**]{.underline}^
+
+```{r}
+hist(Obs, prob=T,col="lightgray",main="Histogramme + densité normale")
+
+
+curve(dnorm(x, mu, ecart_type), col="red", lwd=2, add=TRUE)
+
+```
+
+#### ^**7.Calculer puis représenter un estimateur à noyau de la densité.**^
+
+#### ^Quel est le noyau utilisé ?^
+
+#### ^**Le noyau utilisé est le noyau gaussien**^
+
+#### ^**-** Quelle est la fenêtre utilisée ?^
+
+```{r}
+X=Obs
+
+ptx = seq(min(X),max(X), length=100) 
+
+densite_estimateur = density(X) 
+plot(densite_estimateur, main="Densite empirique vs théorique", type='l',col="blue", lwd= 2) 
+
+lines(ptx, dnorm(ptx, mean=mean(X), sd=sd(X)), lty=3,col="red")
+
+legend("topright", legend=c("Densite empirique","théorique"),
+       col=c("blue","red"), lwd=2)
+```
+
+#### ^[**- Tracer dans une même fenêtre plusieurs estimateurs à noyau.**]{.underline}^
+
+```{r}
+dens <- density(Obs)
+
+plot(dens, main="Estimateur à noyau")
+
+dens_gauss <- density(Obs, kernel="gaussian")
+dens_rect  <- density(Obs, kernel="rectangular")
+dens_tri   <- density(Obs, kernel="triangular")
+
+plot(dens_gauss, col="blue", lwd=2, main="Plusieurs estimateurs à noyau")
+
+lines(dens_rect,  col="red", lwd=2)
+
+lines(dens_tri,   col="green", lwd=2)
+
+legend("topright", legend=c("Gaussien","Rectangulaire","Triangulaire"),
+       col=c("blue","red","green"), lwd=2)
+
+```
+
+## ^EXERCICE2^
+
+<div>
+
+```{r}
+library(boot) 
+# Données 
+x <- c(51, 45, 49, 66, 53, 41, 58, 56, 60, 63, 75, 89, 73, 84, 66, 85, 73, 71, 78, 65) 
+set.seed(123)
+fct <- function(data, i) mean(data[i]) # Bootstrap
+
+
+
+```
+
+```{r}
+ 
+b1 <- boot(x, fct, R = 50)
+boot.ci(b1)
+
+```
+
+```{r}
+ 
+b2 <- boot(x, fct, R = 200)
+Intervalle_confiance2 <-boot.ci(b2)
+Intervalle_confiance2
+```
+
+```{r}
+ 
+b3 <- boot(x, fct, R = 1000)
+Intervalle_confiance3 <-boot.ci(b3)
+Intervalle_confiance3
+```
+
+```{r}
+ 
+b4 <- boot(x, fct, R = 2000)
+Intervalle_confiance4 <-boot.ci(b4)
+Intervalle_confiance4
+```
+
+</div>
+
+::: {style="blue"}
+> 
+
+## ^[EXERCICE3]{.underline}^
+
+### ^1-Tracer la fonction de répartition empirique.^
+
+```{r}
+
+#1- Code pour l'aquisition des données
+
+data2=as.vector(rivers)
+Obs1=sort(data2)
+
+```
+
+```{r}
+#2 Tracons la fonction empirique
+Fonction_empirique2 <- ecdf(Obs1) 
+ # Tracé 
+plot(Fonction_empirique2, main = "Fonction de répartition empirique (ECDF)", 
+xlab = "x", ylab = "F(x)", col = "blue", lwd = 2) 
+
+grid()
+```
+
+### ^2-Superposer la fonction de répartition de la loi normale.^
+
+```{r}
+#2 Ajoute la fonction de répartition de la loi normale de moyenne et d'ecart type celle de Obs
+
+
+#Moyenne et ecart type
+
+mu1=mean(Obs1)
+ecart_type1=sd(Obs1)
+
+
+y1=pnorm(Obs1,mu1,ecart_type1)
+
+plot(Fonction_empirique2, main = "Fonction de répartition empirique (ECDF)", xlab = "x", ylab = "F(x)", col = "blue", lwd = 2) 
+
+
+
+#FONCTION DE REPARTITION
+
+
+curve(pnorm(x,mean=mu1,sd=ecart_type1),col = "red", lwd = 2,add=TRUE)
+
+
+grid()
+```
+
+### ^3- Faire un test d’ajustement de Kolmogorov-Smirnov et Shapiro-Wilks.^
+
+### ^[Peut-on considérer que les données *rivers* sont distribuées selon une loi normale ?]{.underline}^
+
+### ^[Hypothèse du test de kolmogorov]{.underline}^
+
+$H_o:F=F_o$
+
+$H_1:F \neq F_o$
+
+[**Code**]{.underline}
+
+```{r}
+Obs1=data2
+#test de kolmogorov simrov
+ks.test(Obs1, "pnorm", mean = mu1, sd = ecart_type1)
+
+```
+
+^[**Resultats**]{.underline}^
+
+```         
+Asymptotic one-sample Kolmogorov-Smirnov test  data:  Obs1 D = 0.20825, p-value = 9.768e-06 alternative hypothesis: two-sided
+```
+
+### ^[Hypothèse du test de shapiro]{.underline}^
+
+$H_o:$ la variable Obs1 suit une loi normale
+
+$H_1:$ la variable Obs1 ne suit pas une loi normale
+
+[**Code**]{.underline}
+
+```{r}
+Obs1=data2
+#test de shapiro
+shapiro.test(Obs1)
+```
+
+^[**Resultats**]{.underline}^
+
+```         
+Shapiro-Wilk normality test  data:  Obs1 W = 0.66662, p-value < 2.2e-16
+```
+
+Les p-value étant faible dans les deux cas en prenant $\alpha=5$% alors on rejette les hypothèse $H_o$
+
+**On conclut donc qu'on ne peut pas considérer que les données *rivers* sont distribuées selon une loi normale**
+:::
+
+<div>
+
+## EXERCICE4
+
+<div>
+
+Soit mo la moyenne de l'échantillon exrait et me celui de l'échantillon 24h après
+
+$H_o:m_o= m_e$
+
+$H_1:m_o \leq m_e$
+
+La statique du test
+
+</div>
+
+```{r}
+avant=c(12000,13000,21500,17000,15000,22000,11000,21000)
+
+x_apres=c(11000,20000,31000,28000,26000,30000,16000,29000)
+
+
+
+t.test(x_apres,avant,paired="TRUE")
+```
+
+-        Répondez à la question en supposant une hypothèse normale des données.
+
+Soit mo la moyenne de l'échantillon exrait et me celui de l'échantillon 24h après
+
+$H_o:m_o= m_e$
+
+$H_1:m_o \leq m_e$
+
+-        Répondez à la question par un test du signe.
+
+```{r}
+# Médiane hypothétique 
+
+mediane_theorique <- mean(avant)
+
+# On compte les signes 
+
+plus <- sum(x_apres> mediane_theorique) 
+
+moins <- sum(x_apres < mediane_theorique)  
+
+n <- plus + moins  # On ignore les valeurs égales à la médiane 
+
+# Test du signe unilatéral 
+
+binom.test(plus, n = n, p = 0.5, alternative = "greater")
+```
+
+---------Répondez à la question par un test de Mann-Whitney
+
+| 
+
+```{r}
+# Test de Wilcoxon-Mann-Whitney (non paramétrique) 
+
+
+wilcox.test(x_apres,avant,alternative = "greater", paired = TRUE) 
+
+```
+
+</div>

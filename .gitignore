@@ -1,0 +1,27 @@
+# R / Quarto / knitr
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+*_cache/
+*_files/
+*.nb.html
+.quarto/
+
+# LaTeX (export des rapports)
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Système / éditeurs
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+~$*

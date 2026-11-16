@@ -1,0 +1,778 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={TD\_Devoir\_Simulation\_Aléatoire},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{TD\_Devoir\_Simulation\_Aléatoire}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\subsubsection{\texorpdfstring{\ul{EXERCICE1}}{EXERCICE1}}\label{exercice1}
+
+\paragraph{\texorpdfstring{\textbf{1.Donner le code pour acquérir les
+données et les
+visualiser.}}{1.Donner le code pour acquérir les données et les visualiser.}}\label{donner-le-code-pour-acquuxe9rir-les-donnuxe9es-et-les-visualiser.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#1{-} Code pour l\textquotesingle{}aquisition des données}
+
+\NormalTok{Obs}\OtherTok{=}\FunctionTok{as.vector}\NormalTok{(LakeHuron)}
+
+
+
+\FunctionTok{plot}\NormalTok{(Obs, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Niveaux d\textquotesingle{}eau LakeHuron (1875{-}1972)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-1-1.pdf}}
+
+\paragraph{\texorpdfstring{\textbf{2. Tracer la fonction de répartition
+empirique.}}{2. Tracer la fonction de répartition empirique.}}\label{tracer-la-fonction-de-ruxe9partition-empirique.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#2 Tracons la fonction empirique}
+\NormalTok{Fonction\_empirique }\OtherTok{\textless{}{-}} \FunctionTok{ecdf}\NormalTok{(Obs) }
+ \CommentTok{\# Tracé }
+\FunctionTok{plot}\NormalTok{(Fonction\_empirique, }\AttributeTok{main =} \StringTok{"Fonction de répartition empirique (ECDF)"}\NormalTok{,}\AttributeTok{xlab =} \StringTok{"x"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"F(x)"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }
+
+\FunctionTok{grid}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-2-1.pdf}}
+
+\paragraph{\texorpdfstring{3\textbf{. \ul{Ajouter sur ce graphique la
+fonction de répartition de la loi normale dont l'espérance et
+l'écart-type sont la moyenne et l'écart-type de la variable
+Obs.}}}{3. Ajouter sur ce graphique la fonction de répartition de la loi normale dont l'espérance et l'écart-type sont la moyenne et l'écart-type de la variable Obs.}}\label{ajouter-sur-ce-graphique-la-fonction-de-ruxe9partition-de-la-loi-normale-dont-lespuxe9rance-et-luxe9cart-type-sont-la-moyenne-et-luxe9cart-type-de-la-variable-obs.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#3 Ajoute la fonction de répartition de la loi normale de moyenne et d\textquotesingle{}ecart type celle de Obs}
+
+
+\CommentTok{\#Moyenne et ecart type}
+
+\NormalTok{mu}\OtherTok{=}\FunctionTok{mean}\NormalTok{(Obs)}
+
+\NormalTok{ecart\_type}\OtherTok{=}\FunctionTok{sd}\NormalTok{(Obs)}
+
+
+\NormalTok{y}\OtherTok{=}\FunctionTok{pnorm}\NormalTok{(Obs,mu,ecart\_type)}
+
+ 
+
+\FunctionTok{plot}\NormalTok{(Fonction\_empirique, }\AttributeTok{main =} \StringTok{"Fonction de répartition empirique (ECDF)"}\NormalTok{, }
+\AttributeTok{xlab =} \StringTok{"x"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"F(x)"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }
+
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(x, mu, }\AttributeTok{sd=}\NormalTok{ecart\_type), }\AttributeTok{col=}\StringTok{"red"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{)}
+
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }\AttributeTok{legend=}\FunctionTok{c}\NormalTok{(}\StringTok{"Empirique"}\NormalTok{, }\StringTok{"Normale"}\NormalTok{),}
+       \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{\#FONCTION DE REPARTITION}
+
+
+
+\FunctionTok{grid}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-3-1.pdf}}
+
+\paragraph{\texorpdfstring{\textbf{4. Tracer la fonction de quantile
+empirique.}}{4. Tracer la fonction de quantile empirique.}}\label{tracer-la-fonction-de-quantile-empirique.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fonction de quantile}
+
+
+\NormalTok{N}\OtherTok{=}\FunctionTok{length}\NormalTok{(}\FunctionTok{sort}\NormalTok{(Obs))}
+
+\NormalTok{ptx }\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\DecValTok{1}\SpecialCharTok{/}\NormalTok{N, }\AttributeTok{to=}\DecValTok{1}\NormalTok{,}\AttributeTok{by=}\DecValTok{1}\SpecialCharTok{/}\NormalTok{N) }
+
+\NormalTok{Qn }\OtherTok{=} \FunctionTok{quantile}\NormalTok{(Obs, ptx) }
+
+\FunctionTok{plot}\NormalTok{(ptx, Qn, }\AttributeTok{type=}\StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"p"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"Qn(p)"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Fonction de quantile empirique"}\NormalTok{, }\AttributeTok{col=}\DecValTok{4}\NormalTok{, }
+\AttributeTok{lwd=} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-4-1.pdf}}
+
+\paragraph{\texorpdfstring{\textsuperscript{\ul{\textbf{5-Tracer~le~QQ-plot~de~la~variable~Obs.}}}}{5-Tracer~le~QQ-plot~de~la~variable~Obs.}}\label{tracer-le-qq-plot-de-la-variable-obs.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#QQ{-}plot}
+\FunctionTok{qqnorm}\NormalTok{(Obs, }\AttributeTok{xlab=}\StringTok{"Q{-}theo"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Q{-}emp"}\NormalTok{, }\AttributeTok{col=}\DecValTok{4}\NormalTok{, }\AttributeTok{main=}\StringTok{"QQ{-}plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-5-1.pdf}}
+
+\paragraph{\texorpdfstring{\textsuperscript{\ul{\textbf{6-Tracer~l'histogramme~de~la~variable~Obs~ainsi~que~la~densité~de~la~loi~normale~dont~l'espérance~et~l'écart-type~sont~la~moyenne~et~l'écart-type~de~la~variable~Obs.}}}}{6-Tracer~l'histogramme~de~la~variable~Obs~ainsi~que~la~densité~de~la~loi~normale~dont~l'espérance~et~l'écart-type~sont~la~moyenne~et~l'écart-type~de~la~variable~Obs.}}\label{tracer-lhistogramme-de-la-variable-obs-ainsi-que-la-densituxe9-de-la-loi-normale-dont-lespuxe9rance-et-luxe9cart-type-sont-la-moyenne-et-luxe9cart-type-de-la-variable-obs.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(Obs, }\AttributeTok{prob=}\NormalTok{T,}\AttributeTok{col=}\StringTok{"lightgray"}\NormalTok{,}\AttributeTok{main=}\StringTok{"Histogramme + densité normale"}\NormalTok{)}
+\CommentTok{\#Densité normale}
+
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x, mu, ecart\_type), }\AttributeTok{col=}\StringTok{"red"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-6-1.pdf}}
+
+\paragraph{\texorpdfstring{\textsuperscript{\textbf{7.Calculer~puis~représenter~un~estimateur~à~noyau~de~la~densité.}}}{7.Calculer~puis~représenter~un~estimateur~à~noyau~de~la~densité.}}\label{calculer-puis-repruxe9senter-un-estimateur-uxe0-noyau-de-la-densituxe9.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dens }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(Obs)  }\CommentTok{\#Calcul}
+
+\FunctionTok{plot}\NormalTok{(dens, }\AttributeTok{main=}\StringTok{"Estimateur à noyau"}\NormalTok{) }\CommentTok{\#Répresentation}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-7-1.pdf}}
+
+\paragraph{\texorpdfstring{\textsuperscript{\ul{\textbf{-Quel~est~le~noyau~utilisé~?}}}}{-Quel~est~le~noyau~utilisé~?}}\label{quel-est-le-noyau-utilisuxe9}
+
+Le noyau de la densité utilisé est le noyau gaussien
+
+\paragraph{\texorpdfstring{\textsuperscript{\ul{\textbf{-Quelle~est~la~fenêtre~utilisée~?}}}}{-Quelle~est~la~fenêtre~utilisée~?}}\label{quelle-est-la-fenuxeatre-utilisuxe9e}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#fenetre utilise}
+\NormalTok{dens}\SpecialCharTok{$}\NormalTok{bw}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4671343
+\end{verbatim}
+
+\textbf{La fenêtre utilisé est} :
+
+\begin{verbatim}
+0.4671343
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\textsuperscript{\ul{\textbf{-Tracer~dans~une~même~fenêtre~plusieurs~estimateurs~à~noyau.}}}}{-Tracer~dans~une~même~fenêtre~plusieurs~estimateurs~à~noyau.}}\label{tracer-dans-une-muxeame-fenuxeatre-plusieurs-estimateurs-uxe0-noyau.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dens\_gauss }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(Obs, }\AttributeTok{kernel=}\StringTok{"gaussian"}\NormalTok{)}
+\NormalTok{dens\_rect  }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(Obs, }\AttributeTok{kernel=}\StringTok{"rectangular"}\NormalTok{)}
+\NormalTok{dens\_tri   }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(Obs, }\AttributeTok{kernel=}\StringTok{"triangular"}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(dens\_gauss, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{main=}\StringTok{"Plusieurs estimateurs à noyau"}\NormalTok{)}
+
+\FunctionTok{lines}\NormalTok{(dens\_rect,  }\AttributeTok{col=}\StringTok{"red"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{lines}\NormalTok{(dens\_tri,   }\AttributeTok{col=}\StringTok{"green"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend=}\FunctionTok{c}\NormalTok{(}\StringTok{"Gaussien"}\NormalTok{,}\StringTok{"Rectangulaire"}\NormalTok{,}\StringTok{"Triangulaire"}\NormalTok{),}
+       \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{,}\StringTok{"red"}\NormalTok{,}\StringTok{"green"}\NormalTok{), }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-9-1.pdf}}
+
+\subsection{\texorpdfstring{\textsuperscript{EXERCICE2}}{EXERCICE2}}\label{exercice2}
+
+\paragraph{\texorpdfstring{\ul{\textbf{Utilisons la méthode bootstrap
+pour déterminer intervalle de confiance à 95 \% des moyennes
+échantillonnales pour différentes valeurs de
+B}}}{Utilisons la méthode bootstrap pour déterminer intervalle de confiance à 95 \% des moyennes échantillonnales pour différentes valeurs de B}}\label{utilisons-la-muxe9thode-bootstrap-pour-duxe9terminer-intervalle-de-confiance-uxe0-95-des-moyennes-uxe9chantillonnales-pour-diffuxe9rentes-valeurs-de-b}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(boot) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: le package 'boot' a été compilé avec la version R 4.5.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Données }
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{51}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{49}\NormalTok{, }\DecValTok{66}\NormalTok{, }\DecValTok{53}\NormalTok{, }\DecValTok{41}\NormalTok{, }\DecValTok{58}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{63}\NormalTok{, }\DecValTok{75}\NormalTok{, }\DecValTok{89}\NormalTok{, }\DecValTok{73}\NormalTok{, }\DecValTok{84}\NormalTok{, }\DecValTok{66}\NormalTok{, }\DecValTok{85}\NormalTok{, }\DecValTok{73}\NormalTok{, }\DecValTok{71}\NormalTok{, }\DecValTok{78}\NormalTok{, }\DecValTok{65}\NormalTok{) }
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{fct }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, i) }\FunctionTok{mean}\NormalTok{(data[i]) }\CommentTok{\# Bootstrap}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \CommentTok{\#  Intervalle par la Methode bootstrap pour B=50}
+
+\NormalTok{b1 }\OtherTok{\textless{}{-}} \FunctionTok{boot}\NormalTok{(x, fct, }\AttributeTok{R =} \DecValTok{50}\NormalTok{)}
+\FunctionTok{boot.ci}\NormalTok{(b1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in boot.ci(b1): les variances de bootstrap sont nécessaires pour les
+## intervalles studentisés
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in norm.inter(t, adj.alpha): statistiques d'ordre extrême utilisées
+## comme points finaux
+\end{verbatim}
+
+\begin{verbatim}
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 50 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = b1)
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   (59.67, 70.20 )   (59.85, 72.39 )  
+## 
+## Level     Percentile            BCa          
+## 95%   (57.71, 70.25 )   (56.80, 69.44 )  
+## Calculations and Intervals on Original Scale
+## Some basic intervals may be unstable
+## Some percentile intervals may be unstable
+## Warning : BCa Intervals used Extreme Quantiles
+## Some BCa intervals may be unstable
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \CommentTok{\# Intervalle par la Methode bootstrap pour B=200}
+
+\NormalTok{b2 }\OtherTok{\textless{}{-}} \FunctionTok{boot}\NormalTok{(x, fct, }\AttributeTok{R =} \DecValTok{200}\NormalTok{)}
+\NormalTok{Intervalle\_confiance2 }\OtherTok{\textless{}{-}}\FunctionTok{boot.ci}\NormalTok{(b2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in boot.ci(b2): les variances de bootstrap sont nécessaires pour les
+## intervalles studentisés
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Intervalle\_confiance2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 200 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = b2)
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   (59.04, 70.69 )   (58.41, 70.24 )  
+## 
+## Level     Percentile            BCa          
+## 95%   (59.86, 71.69 )   (59.66, 71.45 )  
+## Calculations and Intervals on Original Scale
+## Some basic intervals may be unstable
+## Some percentile intervals may be unstable
+## Some BCa intervals may be unstable
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \CommentTok{\# Intervalle par la Methode bootstrap pour B=1000}
+
+\NormalTok{b3 }\OtherTok{\textless{}{-}} \FunctionTok{boot}\NormalTok{(x, fct, }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
+\NormalTok{Intervalle\_confiance3 }\OtherTok{\textless{}{-}}\FunctionTok{boot.ci}\NormalTok{(b3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in boot.ci(b3): les variances de bootstrap sont nécessaires pour les
+## intervalles studentisés
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Intervalle\_confiance3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = b3)
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   (59.40, 70.78 )   (59.85, 71.35 )  
+## 
+## Level     Percentile            BCa          
+## 95%   (58.75, 70.25 )   (58.55, 70.10 )  
+## Calculations and Intervals on Original Scale
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \CommentTok{\#Intervalle par la Methode bootstrap pour B=2000}
+
+\NormalTok{b4 }\OtherTok{\textless{}{-}} \FunctionTok{boot}\NormalTok{(x, fct, }\AttributeTok{R =} \DecValTok{2000}\NormalTok{)}
+\NormalTok{Intervalle\_confiance4 }\OtherTok{\textless{}{-}}\FunctionTok{boot.ci}\NormalTok{(b4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in boot.ci(b4): les variances de bootstrap sont nécessaires pour les
+## intervalles studentisés
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Intervalle\_confiance4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 2000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = b4)
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   (59.33, 71.02 )   (59.25, 71.15 )  
+## 
+## Level     Percentile            BCa          
+## 95%   (58.95, 70.85 )   (59.15, 70.90 )  
+## Calculations and Intervals on Original Scale
+\end{verbatim}
+
+\ul{\textbf{Conclusion:}}
+
+Pour B=50
+
+\ul{Intervalle de confiance}: \textbf{{[}59.67, 70.20 {]}}
+
+Pour B=200
+
+\ul{Intervalle de confiance}: \textbf{\textbar59.40, 71.03 {]}}
+
+Pour B=1000
+
+\ul{Intervalle de confiance}: \textbf{\textbar59.31, 71.05 {]}}
+
+Pour B=2000
+
+\ul{Intervalle de confiance}: \textbf{\textbar59.07, 71.01{]}}
+
+\ul{\textbf{On réalise le constat suivant lequel l'interavlle de
+confiance varie entre : {[}59.07; 71.20{]}}}
+
+\begin{quote}
+\end{quote}
+
+\subsection{\texorpdfstring{\textsuperscript{\ul{EXERCICE3}}}{EXERCICE3}}\label{exercice3}
+
+\subsubsection{\texorpdfstring{\textsuperscript{1-Tracer~la~fonction~de~répartition~empirique.}}{1-Tracer~la~fonction~de~répartition~empirique.}}\label{tracer-la-fonction-de-ruxe9partition-empirique.-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#1{-} Code pour l\textquotesingle{}aquisition des données}
+
+\NormalTok{data2}\OtherTok{=}\FunctionTok{as.vector}\NormalTok{(rivers)}
+\NormalTok{Obs1}\OtherTok{=}\FunctionTok{sort}\NormalTok{(data2)}
+
+\CommentTok{\#2 Tracons la fonction empirique}
+\NormalTok{Fonction\_empirique2 }\OtherTok{\textless{}{-}} \FunctionTok{ecdf}\NormalTok{(Obs1) }
+ \CommentTok{\# Tracé }
+\FunctionTok{plot}\NormalTok{(Fonction\_empirique2, }\AttributeTok{main =} \StringTok{"Fonction de répartition empirique (ECDF)"}\NormalTok{, }
+\AttributeTok{xlab =} \StringTok{"x"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"F(x)"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }
+
+\FunctionTok{grid}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-15-1.pdf}}
+
+\subsubsection{\texorpdfstring{\textsuperscript{2-Superposer~la~fonction~de~répartition~de~la~loi~normale.}}{2-Superposer~la~fonction~de~répartition~de~la~loi~normale.}}\label{superposer-la-fonction-de-ruxe9partition-de-la-loi-normale.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#2 Ajoute la fonction de répartition de la loi normale de moyenne et d\textquotesingle{}ecart type celle de Obs}
+
+
+\CommentTok{\#Moyenne et ecart type}
+
+\NormalTok{mu1}\OtherTok{=}\FunctionTok{mean}\NormalTok{(Obs1)}
+
+\NormalTok{ecart\_type1}\OtherTok{=}\FunctionTok{sd}\NormalTok{(Obs1)}
+
+
+\FunctionTok{plot}\NormalTok{(Fonction\_empirique2, }\AttributeTok{main =} \StringTok{"Fonction de répartition empirique (ECDF)"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"x"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"F(x)"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }
+
+
+\CommentTok{\#FONCTION DE REPARTITION}
+
+
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(x,}\AttributeTok{mean=}\NormalTok{mu1,}\AttributeTok{sd=}\NormalTok{ecart\_type1),}\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{,}\AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{)}
+
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }\AttributeTok{legend=}\FunctionTok{c}\NormalTok{(}\StringTok{"Empirique"}\NormalTok{, }\StringTok{"Normale"}\NormalTok{),}
+       \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+
+
+\FunctionTok{grid}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{TP_SIMULATION_files/figure-latex/unnamed-chunk-16-1.pdf}}
+
+\subsubsection{\texorpdfstring{\textsuperscript{3-~Faire~un~test~d'ajustement~de~Kolmogorov-Smirnov~et~Shapiro-Wilks.}}{3-~Faire~un~test~d'ajustement~de~Kolmogorov-Smirnov~et~Shapiro-Wilks.}}\label{faire-un-test-dajustement-de-kolmogorov-smirnov-et-shapiro-wilks.}
+
+\subsubsection{\texorpdfstring{\textsuperscript{\ul{Peut-on~considérer~que~les~données~\emph{rivers}~sont~distribuées~selon~une~loi~normale~?}}}{Peut-on~considérer~que~les~données~rivers~sont~distribuées~selon~une~loi~normale~?}}\label{peut-on-considuxe9rer-que-les-donnuxe9es-rivers-sont-distribuuxe9es-selon-une-loi-normale}
+
+\subsubsection{\texorpdfstring{\textsuperscript{\ul{Hypothèse~du~test~de~kolmogorov}}}{Hypothèse~du~test~de~kolmogorov}}\label{hypothuxe8se-du-test-de-kolmogorov}
+
+Soit F la fonction de répartition de notre variable Obs1 représentatif
+de rivers
+
+\(H_o:F=F_o\)
+
+\(H_1:F \neq F_o\)
+
+\ul{\textbf{Code}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Obs1}\OtherTok{=}\NormalTok{data2}
+\CommentTok{\#test de kolmogorov simrov}
+\FunctionTok{ks.test}\NormalTok{(Obs1, }\StringTok{"pnorm"}\NormalTok{, }\AttributeTok{mean =}\NormalTok{ mu1, }\AttributeTok{sd =}\NormalTok{ ecart\_type1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in ks.test.default(Obs1, "pnorm", mean = mu1, sd = ecart_type1): ties
+## should not be present for the one-sample Kolmogorov-Smirnov test
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  Obs1
+## D = 0.20825, p-value = 9.768e-06
+## alternative hypothesis: two-sided
+\end{verbatim}
+
+\textsuperscript{\ul{\textbf{Resultats}}}
+
+\begin{verbatim}
+Asymptotic one-sample Kolmogorov-Smirnov test  data:  Obs1 D = 0.20825, p-value = 9.768e-06 alternative hypothesis: two-sided
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{\textsuperscript{\ul{Hypothèse~du~test~de~shapiro}}}{Hypothèse~du~test~de~shapiro}}\label{hypothuxe8se-du-test-de-shapiro}
+
+\(H_o:\) la variable Obs1 suit une loi normale
+
+\(H_1:\) la variable Obs1 ne suit pas une loi normale
+
+\ul{\textbf{Code}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Obs1}\OtherTok{=}\NormalTok{data2}
+\CommentTok{\#test de shapiro}
+\FunctionTok{shapiro.test}\NormalTok{(Obs1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  Obs1
+## W = 0.66662, p-value < 2.2e-16
+\end{verbatim}
+
+\textsuperscript{\ul{\textbf{Resultats}}}
+
+\begin{verbatim}
+Shapiro-Wilk normality test  data:  Obs1 W = 0.66662, p-value < 2.2e-16
+\end{verbatim}
+
+Les p-value étant faible dans les deux cas en prenant \(\alpha=5\)\%
+alors on rejette les hypothèse \(H_o\)
+
+\textbf{On conclut donc qu'on ne peut pas considérer que les données
+\emph{rivers} sont distribuées selon une loi normale}
+
+\subsection{EXERCICE4}\label{exercice4}
+
+\subsubsection{\texorpdfstring{\ul{\textbf{Répondons à la question en
+supposant une hypothèse normale des
+données.}}}{Répondons à la question en supposant une hypothèse normale des données.}}\label{ruxe9pondons-uxe0-la-question-en-supposant-une-hypothuxe8se-normale-des-donnuxe9es.}
+
+Soit \(m_o\) la moyenne de l'échantillon exrait et \(m_e\) celui de
+l'échantillon 24h après
+
+\(H_o:m_o= m_e\)
+
+\(H_1:m_o < m_e\)
+
+Les variables x\_apres,x\_avant sont des variables appariés issus des
+mêmes individus
+
+Donc il s'agit d'un test sur la moyenne de deux echantillons de
+variables aléatoires appariés
+
+\ul{\textbf{Code}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Données}
+\NormalTok{x\_avant}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{12000}\NormalTok{,}\DecValTok{13000}\NormalTok{,}\DecValTok{21500}\NormalTok{,}\DecValTok{17000}\NormalTok{,}\DecValTok{15000}\NormalTok{,}\DecValTok{22000}\NormalTok{,}\DecValTok{11000}\NormalTok{,}\DecValTok{21000}\NormalTok{)}
+
+\NormalTok{x\_apres}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{11000}\NormalTok{,}\DecValTok{20000}\NormalTok{,}\DecValTok{31000}\NormalTok{,}\DecValTok{28000}\NormalTok{,}\DecValTok{26000}\NormalTok{,}\DecValTok{30000}\NormalTok{,}\DecValTok{16000}\NormalTok{,}\DecValTok{29000}\NormalTok{)}
+
+
+\CommentTok{\# Test }
+
+\FunctionTok{t.test}\NormalTok{(x\_apres,x\_avant,}\AttributeTok{paired=}\StringTok{"TRUE"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Paired t-test
+## 
+## data:  x_apres and x_avant
+## t = 5.2786, df = 7, p-value = 0.00115
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##   4036.762 10588.238
+## sample estimates:
+## mean difference 
+##          7312.5
+\end{verbatim}
+
+\ul{\textbf{Conclusion}}
+
+\begin{verbatim}
+p-value = 0.00115 
+La p-value = 0.00115 <0.05 donc on rejette l'hypothèse intiale 
+\end{verbatim}
+
+Par conséquent l'hypothèse \(H_1\) est retenue .
+
+Il existe donc un accroissement significatif du nombre de bactéries par
+cm\textsuperscript{3} au cours du temps
+
+\subsubsection{\texorpdfstring{~ \textbf{Répondons à la question par un
+test du
+signe.}}{~ Répondons à la question par un test du signe.}}\label{ruxe9pondons-uxe0-la-question-par-un-test-du-signe.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Médiane hypothétique }
+
+\NormalTok{mediane\_theorique }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(x\_avant)}
+
+\CommentTok{\# On compte les signes }
+
+\NormalTok{plus }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(x\_apres}\SpecialCharTok{\textgreater{}}\NormalTok{ mediane\_theorique) }
+
+\NormalTok{moins }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(x\_apres }\SpecialCharTok{\textless{}}\NormalTok{ mediane\_theorique)  }
+
+\NormalTok{n }\OtherTok{\textless{}{-}}\NormalTok{ plus }\SpecialCharTok{+}\NormalTok{ moins  }\CommentTok{\# On ignore les valeurs égales à la médiane }
+
+\CommentTok{\# Test du signe unilatéral }
+
+\FunctionTok{binom.test}\NormalTok{(plus, }\AttributeTok{n =}\NormalTok{ n, }\AttributeTok{p =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{alternative =} \StringTok{"greater"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Exact binomial test
+## 
+## data:  plus and n
+## number of successes = 6, number of trials = 8, p-value = 0.1445
+## alternative hypothesis: true probability of success is greater than 0.5
+## 95 percent confidence interval:
+##  0.4003106 1.0000000
+## sample estimates:
+## probability of success 
+##                   0.75
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\ul{\textbf{Conclusion:}}}{Conclusion:}}\label{conclusion}
+
+On conclut grace a la probabilité de succès de 75\% qu'il y a
+accroissement significatif du nombre de bactéries par
+cm\textsuperscript{3}
+
+au cours du temps.
+
+\subsubsection{Répondons à la question par un test de
+Mann-Whitney}\label{ruxe9pondons-uxe0-la-question-par-un-test-de-mann-whitney}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Test de Wilcoxon{-}Mann{-}Whitney (non paramétrique) }
+
+
+\FunctionTok{wilcox.test}\NormalTok{(x\_apres,x\_avant,}\AttributeTok{alternative =} \StringTok{"greater"}\NormalTok{, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x_apres, x_avant, alternative = "greater", :
+## impossible de calculer la p-value exacte avec des ex-aequos
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  x_apres and x_avant
+## V = 35, p-value = 0.01028
+## alternative hypothesis: true location shift is greater than 0
+\end{verbatim}
+
+\ul{\textbf{Conclusion}}
+
+\begin{verbatim}
+p-value = 0.01028
+
+La p-value < 0.05 donc on rejette l'hypothèse Ho 
+ 
+\end{verbatim}
+
+Par conséquent on retient que \(H_1\) est vrai donc il existe un
+accroissement significatif du nombre de bactéries par
+cm\textsuperscript{3}
+
+au cours du temps.
+
+\end{document}

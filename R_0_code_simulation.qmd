@@ -1,0 +1,20 @@
+---
+title: "Simulattion aléatoire_code_R"
+format: revealjs
+editor: visual
+---
+
+```{r}
+1+1
+set.seed(123)
+x=rnorm( 20,mean=11,sd=2)
+a=t.test(x,mu=10,alternative="two .sided")
+a
+```
+
+```{r}
+library(readxl)
+my_data = read_excel("donnees/Intima_Media.xlsx")
+IMC=my_data$poids(my_data/100)^2)
+  Mesurel=my_data$mesure[IMC>30]
+```
